@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+[
+  <!ENTITY % entities SYSTEM "../common/generic-entities.ent">
+    %entities;
+]>
+<!-- refers to legacy doc: <add github link to legacy doc piece, if applicable> -->
+<!-- point back to this document with a similar comment added to your legacy doc piece -->
+<!-- refer to README.md for file and id naming conventions -->
+<!-- metadata is dealt with on the assembly level -->
+<topic xml:id="concept-example"
+ role="concept" xml:lang="en"
+ xmlns="http://docbook.org/ns/docbook" version="5.2"
+ xmlns:its="http://www.w3.org/2005/11/its"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:trans="http://docbook.org/ns/transclusion">
+  <info>
+   <title>IP addresses and routing</title><!-- can be changed via merge in the assembly -->
+    <!--add author's email address-->
+    <meta name="maintainer" content="jsindelarova@suse.com" its:translate="no"/>
+    <abstract><!-- can be changed via merge in the assembly -->
+      <para>
+   The information in this section is limited to IPv4 networks. 
+  </para>
+    </abstract>
+  </info>
+  <section xml:id="sec-network-addresses-ip">
+   <title>IP addresses</title>
+   <para>
+    Every computer on the Internet has a unique 32-bit address. These 32 bits
+    (or 4 bytes) are normally written as illustrated in the second row in
+    <xref linkend="aus-net-basic-ipaddress"/>.
+   </para>
+   <example xml:id="aus-net-basic-ipaddress">
+    <title>Writing IP addresses</title>
+<screen>IP Address (binary):  11000000 10101000 00000000 00010100
+IP Address (decimal):      192.     168.       0.      20</screen>
+   </example>
+   <para>
+    In decimal form, the four bytes are written in the decimal number system,
+    separated by periods. The IP address is assigned to a host or a network
+    interface. It can be used only once throughout the world. There are
+    exceptions to this rule, but these are not relevant to the following
+    passages.
+   </para>
+   <para>
+    The points in IP addresses indicate the hierarchical system. Until the
+    1990s, IP addresses were strictly categorized in classes. However, this
+    system proved too inflexible and was discontinued. Now, <emphasis>classless
+    routing</emphasis> (CIDR, classless interdomain routing) is used.
+   </para>
+  </section>
+
+  <section xml:id="sec-network-addresses-route">
+   <title>Netmasks and routing</title>
+   <para>
+    Netmasks are used to define the address range of a subnet. If two hosts are
+    in the same subnet, they can reach each other directly. If they are not in
+    the same subnet, they need the address of a gateway that handles all the
+    traffic for the subnet. To check if two IP addresses are in the same
+    subnet, simply <quote>AND</quote> both addresses with the netmask. If the
+    result is identical, both IP addresses are in the same local network. If
+    there are differences, the remote IP address, and thus the remote
+    interface, can only be reached over a gateway.
+   </para>
+   <para>
+    To understand how the netmask works, look at
+    <xref linkend="tab-net-basic-netmask"/>. The netmask consists of 32 bits
+    that identify how much of an IP address belongs to the network. All those
+    bits that are <literal>1</literal> mark the corresponding bit in the IP
+    address as belonging to the network. All bits that are <literal>0</literal>
+    mark bits inside the subnet. This means that the more bits are
+    <literal>1</literal>, the smaller the subnet is. Because the netmask always
+    consists of several successive <literal>1</literal> bits, it is also
+    possible to count the number of bits in the netmask. In
+    <xref linkend="tab-net-basic-netmask"/> the first net with 24 bits could
+    also be written as <literal>192.168.0.0/24</literal>.
+   </para>
+   <example xml:id="tab-net-basic-netmask">
+    <title>Linking IP addresses to the netmask</title>
+<screen>IP address (192.168.0.20):  11000000 10101000 00000000 00010100
+Netmask   (255.255.255.0):  11111111 11111111 11111111 00000000
+---------------------------------------------------------------
+Result of the link:         11000000 10101000 00000000 00000000
+In the decimal system:           192.     168.       0.       0
+
+IP address (213.95.15.200): 11010101 10111111 00001111 11001000
+Netmask    (255.255.255.0): 11111111 11111111 11111111 00000000
+---------------------------------------------------------------
+Result of the link:         11010101 10111111 00001111 00000000
+In the decimal system:           213.      95.      15.       0</screen>
+   </example>
+   <para>
+    To give another example: all machines connected with the same Ethernet
+    cable are normally located in the same subnet and are directly accessible.
+    Even when the subnet is physically divided by switches or bridges, these
+    hosts can still be reached directly.
+   </para>
+   <para>
+    IP addresses outside the local subnet can only be reached if a gateway is
+    configured for the target network. In the most common case, there is only
+    one gateway that handles all traffic that is external. However, it is also
+    possible to configure several gateways for different subnets.
+   </para>
+   <para>
+    If a gateway has been configured, all external IP packets are sent to the
+    appropriate gateway. This gateway then attempts to forward the packets in
+    the same manner&mdash;from host to host&mdash;until it reaches the
+    destination host or the packet's TTL (time to live) expires.
+   </para>
+   <variablelist xml:id="net-basic-spezial-net">
+    <title>Specific addresses</title>
+    <varlistentry>
+     <term>Base Network Address</term>
+     <listitem>
+      <para>
+       This is the netmask AND any address in the network, as shown in
+       <xref linkend="tab-net-basic-netmask"/> under <literal>Result</literal>.
+       This address cannot be assigned to any hosts.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>Broadcast Address</term>
+     <listitem>
+      <para>
+       This could be paraphrased as: <quote>Access all hosts in this
+       subnet.</quote> To generate this, the netmask is inverted in binary form
+       and linked to the base network address with a logical OR. The above
+       example therefore results in 192.168.0.255. This address cannot be
+       assigned to any hosts.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>Local Host</term>
+     <listitem>
+      <para>
+       The address <systemitem class="ipaddress">127.0.0.1</systemitem> is
+       assigned to the <quote>loopback device</quote> on each host. A
+       connection can be set up to your own machine with this address and with
+       all addresses from the complete
+       <systemitem class="ipaddress">127.0.0.0/8</systemitem> loopback network
+       as defined with IPv4. With IPv6 there is only one loopback address
+       (<systemitem class="ipaddress">::1</systemitem>).
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+   <para>
+    Because IP addresses must be unique all over the world, you cannot select
+    random addresses. There are three address domains to use to set up a private
+    IP-based network. These cannot get any connection from the rest of the
+    Internet, because they cannot be transmitted over the Internet. These
+    address domains are specified in RFC&nbsp;1597 and listed in
+    <xref linkend="tab-net-basic-privat-net"/>.
+   </para>
+   <table xml:id="tab-net-basic-privat-net">
+    <title>Private IP address domains</title>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>
+        <para>
+         Network/Netmask
+        </para>
+       </entry>
+       <entry>
+        <para>
+         Domain
+        </para>
+       </entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>
+        <para>
+         <systemitem class="ipaddress">10.0.0.0</systemitem>/<systemitem class="netmask">255.0.0.0</systemitem>
+        </para>
+       </entry>
+       <entry>
+        <para>
+         <systemitem class="ipaddress">10.x.x.x</systemitem>
+        </para>
+       </entry>
+      </row>
+      <row>
+       <entry>
+        <para>
+         <systemitem class="ipaddress">172.16.0.0</systemitem>/<systemitem class="netmask">255.240.0.0</systemitem>
+        </para>
+       </entry>
+       <entry>
+        <para>
+         <systemitem class="ipaddress">172.16.x.x</systemitem> &ndash;
+         <systemitem class="ipaddress">172.31.x.x</systemitem>
+        </para>
+       </entry>
+      </row>
+      <row>
+       <entry>
+        <para>
+         <systemitem class="ipaddress">192.168.0.0</systemitem>/<systemitem class="netmask">255.255.0.0</systemitem>
+        </para>
+       </entry>
+       <entry>
+        <para>
+         <systemitem class="ipaddress">192.168.x.x</systemitem>
+        </para>
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </section>
+</topic>
