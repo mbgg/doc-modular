@@ -20,21 +20,43 @@ give me 5&nbsp;TB of disk space and 56MB and 56 MB
         takes 4 d and 7&nbsp;MB
         take 123&nbsp;GB
         0461:4d.
-        
         0461:4d;
         0461:4d:
         0461:4d-
         0461:4d15
         <command>gnome-keyring</command>
+        and also &xen; ws causing troubles...
       </para>
     </abstract>
   </info>
+  <variablelist>
+    <varlistentry>
+        <term>SCSI host adapter (<guimenu>scsi 5MB</guimenu>)</term>
+        <listitem>
+          <para>
+          </para>
+        </listitem>
+    </varlistentry>
+    <varlistentry>
+        <term>insert term</term>
+        <listitem>
+        <para>
+          put the the putter
+        </para>
+          <para>
+            the client's name, the client's IP address
+            tell me 'honey d' please in 'silence' 'es over s'
+          </para>
+        </listitem>
+    </varlistentry>
+  </variablelist>
   <para>
-
+    The &qemu; emulation is only supported on &kvm; and &xen; hypervisors.
     If a &systemd; timer was inactive or the system was off during the expected execution time,
     missed events can optionally be triggered immediately when the timer is activated again. To
     enable this, add the configuration option <literal>Persistent=true</literal> to the
     <literal>[Timer]</literal> section:
+    Peter, johnny, and told, me, that.
   </para>
 <screen>[Timer]
 OnCalendar=Mon..Fri 10:00
