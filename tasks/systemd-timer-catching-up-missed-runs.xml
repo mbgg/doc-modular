@@ -16,7 +16,16 @@
     <abstract>
       <para>
         With &systemd; timers, you can make leeway for missed timer events.
-        just print (0461:4d15)
+give me 5&nbsp;TB of disk space and 56MB and 56 MB
+        takes 4 d and 7&nbsp;MB
+        take 123&nbsp;GB
+        0461:4d.
+        
+        0461:4d;
+        0461:4d:
+        0461:4d-
+        0461:4d15
+        <command>gnome-keyring</command>
       </para>
     </abstract>
   </info>
