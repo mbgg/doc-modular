@@ -1,306 +1,414 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This file originates from the project https://github.com/openSUSE/doc-kit -->
-<!-- This file can be edited downstream. -->
-
-<?xml-stylesheet href="urn:x-suse:xslt:profiling:docbook51-profile.xsl"
- type="text/xml"
- title="Profiling step"?>
 <!DOCTYPE article
 [
   <!ENTITY % entities SYSTEM "generic-entities.ent">
     %entities;
 ]>
-
-<!--filename:
- * use hyphens as separators
- * use topic type as prefix (task|concept|reference)
- * content must be obvious from filename-->
-
-<!--Root ID
- * use topic type as prefix (task|concept|reference)
- * describe task, use verb in infinitive
-   e.g. task-register-product-after-installation-->
-
-<!--IDs
-  * must not reflect structure-->
-
-<!--metadata
- * product foo
- * product version xyz
- * topic category/ies
- * target group(s)
- * initially published
- * last modified-->
-
-<article xml:id="task-modify-boot-parameters" xml:lang="en" role="task"
- xmlns="http://docbook.org/ns/docbook" version="5.1"
+<article xml:id="task-modify-kernel-boot-parameters"
+ role="task" xml:lang="en"
+ xmlns="http://docbook.org/ns/docbook" version="5.2"
  xmlns:its="http://www.w3.org/2005/11/its"
  xmlns:xi="http://www.w3.org/2001/XInclude"
- xmlns:xlink="http://www.w3.org/1999/xlink">
-
- <info>
-  <title>Modifying kernel boot parameters</title>
-  <dm:docmanager xmlns:dm="urn:x-suse:ns:docmanager">
-   <dm:bugtracker>
-    <dm:url>https://bugzilla.suse.com/enter_bug.cgi</dm:url>
-    <dm:component>Smart Docs</dm:component>
-    <dm:product>Documentation</dm:product>
-    <dm:assignee>thomas.schraitle@suse.com</dm:assignee>
-   </dm:bugtracker>
-   <dm:translation>no</dm:translation>
-  </dm:docmanager>
- </info>
-
- <section xml:id="environment-modify-boot-parameters">
-  <!--to create unique section IDs, amend the TOPIC-ID (without prefix)-->
-  <!--example: environment-register-product-after-installation-->
-  <title>Environment</title>
-  <para>
-   This document applies to the following products and product versions:
-  </para>
-  <itemizedlist>
-   <listitem>
-    <para>&sles;&nbsp;15&nbsp;SP5, 15&nbsp;SP4, 15&nbsp;SP3, 15&nbsp;SP2, 12&nbsp;SP5</para>
-   </listitem>
-   <listitem>
-    <para>&sles4sap;&nbsp;15&nbsp;SP5, 15&nbsp;SP4, 15&nbsp;SP3, 15&nbsp;SP2, 12&nbsp;SP5</para>
-   </listitem>
-   <listitem>
-    <para>&sleha;&nbsp;15&nbsp;SP5, 15&nbsp;SP4, 15&nbsp;SP3, 15&nbsp;SP2, 12&nbsp;SP5</para>
-   </listitem>
-   <listitem>
-    <para>&slehpc;&nbsp;15&nbsp;SP5, 15&nbsp;SP4, 15&nbsp;SP3, 15&nbsp;SP2</para>
-   </listitem>
-   <listitem>
-    <para>&sled;&nbsp;15&nbsp;SP5</para>
-   </listitem>
-   <listitem>
-    <para>&slert;&nbsp;15&nbsp;SP5</para>
-   </listitem>
-  </itemizedlist>
- </section>
-
- <section xml:id="introduction-modify-boot-parameters">
-  <title>Introduction</title>
-  <para>
-   The &suselinux; kernel provides everything to ensure
-   stable operation on your computer. However, in some cases it is necessary
-   to provide boot parameters to influence the boot process for &grub; or modify
-   the behaviour of the kernel itself.
-  </para>
-  <para>
-   For example, you can control the <emphasis>Advanced Configuration and
-    Power Interface</emphasis> (ACPI) settings, define the output console,
-   enable debugging, and many more.
-  </para>
-  <para>
-   There are two methods to modify your kernel boot parameters:
-  </para>
-  <itemizedlist>
-   <listitem>
-    <formalpara>
-     <title>Temporarily</title>
-     <para>
-      After you have changed the kernel boot parameters, the change will
-      be applied for the upcoming boot process. However, it does not survive subsequent
-      boot processes.
-     </para>
-    </formalpara>
-   </listitem>
-   <listitem>
-    <formalpara>
-     <title>Permanently</title>
-     <para>
-      Your change is applied for each boot process.
-     </para>
-    </formalpara>
-   </listitem>
-  </itemizedlist>
-  <para>
-   As an example, we will disable the splash screen that you can see during the boot.
-  </para>
- </section>
-
- <section xml:id="requirements-modify-boot-parameters">
-  <title>Requirements</title>
-  <itemizedlist>
-   <listitem>
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:trans="http://docbook.org/ns/transclusion">
+  <info>
+    <title>Modifying kernel boot parameters</title>
+    <meta name="maintainer" content="" its:translate="no"/>
+    <abstract>
+      <para>
+        Kernel boot parameters are configurations passed to the &suselinux;
+        kernel during the boot process for &grub;, instructing it on how to
+        behave or configure certain features.
+      </para>
+    </abstract>
+  </info>
+  <section xml:id="modify-kernel-boot-parameters-reason">
+    <title>Why modify kernel boot parameters?</title>
     <para>
-     To only temporarily modify the kernel boot parameters, no prerequisites required.
+      Modifying kernel boot parameters is essential for achieving specific
+      system configurations and addressing several scenarios, including:
     </para>
-   </listitem>
-   <listitem>
+    <itemizedlist>
+      <listitem>
+        <formalpara>
+          <title>Performance optimization</title>
+          <para>
+            Tweaking parameters to enhance system performance, responsiveness,
+            and overall efficiency based on specific system requirements.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Hardware compatibility</title>
+          <para>
+            Tailoring parameters to ensure compatibility with specific hardware
+            components, addressing potential compatibility issues.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Troubleshooting</title>
+          <para>
+            Altering parameters to troubleshoot issues like graphics driver
+            problems, ensuring a more stable and functional system.
+          </para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="modify-kernel-boot-parameters-examples">
+    <title>Examples of commonly modified kernel boot parameters</title>
     <para>
-     To permanently modify the kernel boot parameters, you need write access
-     to your root partition and the <filename>/etc</filename>
-     directory.
+      Some commonly modified kernel boot parameters include the following:
     </para>
-   </listitem>
-  </itemizedlist>
- </section>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <literal>root=</literal>: Specifies the path to the root filesystem.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>quiet</literal>: Suppresses most boot messages.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>splash</literal>: Displays a graphical boot splash screen.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>nomodeset</literal>: Disables kernel mode setting.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>debug</literal>: Enables debugging output.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>acpi=</literal>: Toggles the Advanced Configuration and
+          Power Interface (ACPI) settings.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="modify-kernel-boot-parameters-confifuration">
+    <title>Where to configure kernel boot parameters?</title>
+    <warning>
+      <title>Information not directly applicable to temporary changes in kernel boot parameters</title>
+      <para>
+        The information in this section is useful only to modify kernel boot
+        parameters for multiple boot processes. To make temporary changes in
+        the kernel boot parameters for the current boot process, ignore the
+        information in this section.
+      </para>
+    </warning>
+    <para>
+      Kernel boot parameters can be configured in the &grub; configuration file
+      <filename>/etc/default/grub</filename>. A sample &grub; configuration
+      file for &suselinux; is given below for convenient reference:
+    </para>
+<screen>
+# If you change this file, run 'grub2-mkconfig -o /boot/grub2/grub.cfg' afterwards to update
+# /boot/grub2/grub.cfg.
 
- <section xml:id="modify-boot-parameters-temporarily">
-  <title>Temporarily modifying kernel boot parameters</title>
-  <para>
-   Test a kernel boot parameter, a temporary change is helpful.
-   Such a change is only applied for the current boot process, not for any
-   subsequent boot processes.
-  </para>
-  <procedure>
-   <para>
-    To temporarily disable the splash screen, proceed as follows:
-   </para>
-   <step>
+# Uncomment to set your own custom distributor. If you leave it unset or empty, the default
+# policy is to determine the value from /etc/os-release
+GRUB_DISTRIBUTOR=
+GRUB_DEFAULT=saved
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=8
+GRUB_CMDLINE_LINUX_DEFAULT="splash=silent resume=/dev/disk/by-uuid/73877b75-45cb-4cfb-b301-10b7a1d4180d preempt=full mitigations=auto quiet security=apparmor"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to automatically save last booted menu entry in GRUB2 environment
+
+# variable `saved_entry'
+# GRUB_SAVEDEFAULT="true"
+#Uncomment to enable BadRAM filtering, modify to suit your needs
+
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+# GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+#Uncomment to disable graphical terminal (grub-pc only)
+
+GRUB_TERMINAL="gfxterm"
+# The resolution used on graphical terminal
+#note that you can use only modes which your graphic card supports via VBE
+
+# you can see them in real GRUB with the command `vbeinfo'
+GRUB_GFXMODE="auto"
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+# GRUB_DISABLE_LINUX_UUID=true
+#Uncomment to disable generation of recovery mode menu entries
+
+# GRUB_DISABLE_RECOVERY="true"
+#Uncomment to get a beep at grub start
+
+# GRUB_INIT_TUNE="480 440 1"
+GRUB_BACKGROUND=
+GRUB_THEME=/boot/grub2/themes/openSUSE/theme.txt
+SUSE_BTRFS_SNAPSHOT_BOOTING="true"
+GRUB_USE_LINUXEFI="true"
+GRUB_DISABLE_OS_PROBER="false"
+GRUB_ENABLE_CRYPTODISK="n"
+GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
+</screen>
     <para>
-     Switch on your computer. The boot process will start.
+      In the sample configuration presented above, the most commonly modified
+      entries are:
     </para>
-   </step>
-   <step>
+    <itemizedlist>
+      <listitem>
+<screen>GRUB_CMDLINE_LINUX_DEFAULT="splash=silent resume=/dev/disk/by-uuid/73877b75-45cb-4cfb-b301-10b7a1d4180d preempt=full mitigations=auto quiet security=apparmor"</screen>
+      </listitem>
+      <listitem>
+<screen>GRUB_CMDLINE_LINUX=""</screen>
+      </listitem>
+    </itemizedlist>
     <para>
-     In the &grub; boot screen, highlight the entry you want to modify using
-     the arrow keys <keycap function="up"/> and <keycap function="down"/>.
+      For example, you can modify them to look like the following:
     </para>
-   </step>
-   <step>
+    <itemizedlist>
+      <listitem>
+<screen>GRUB_CMDLINE_LINUX_DEFAULT="quiet"</screen>
+      </listitem>
+      <listitem>
+<screen>GRUB_CMDLINE_LINUX="root=/dev/sda1 quiet nomodeset acpi=off"</screen>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="modify-kernel-boot-parameters-different-methods">
+    <title>Methods of modifying kernel boot parameters</title>
     <para>
-     Press the <keycap>E</keycap> key. You will be presented with an editor
-     and the content of the selected boot entry. It will look similiar to the following:
+      There are two methods to modify your kernel boot parameters:
     </para>
-    <screen>setparams '&productname; &productnumber;'
+    <itemizedlist>
+      <listitem>
+        <formalpara>
+          <title>Temporarily</title>
+          <para>
+            After you have changed the kernel boot parameters, the change are
+            applied for the upcoming boot process. However, it does not survive
+            subsequent boot processes.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Permanently</title>
+          <para>
+            Your change is applied for each boot process.
+          </para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+    <para>
+      As an example, we disable the splash screen that you can see during the
+      boot.
+    </para>
+  </section>
+  <section xml:id="modify-kernel-boot-parameters-requirements">
+    <title>Requirements</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          To only temporarily modify the kernel boot parameters, no
+          prerequisites required.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To permanently modify the kernel boot parameters, you need write
+          access to your root partition and the <filename>/etc</filename>
+          directory.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="modify-kernel-boot-parameters-temporarily">
+    <title>Temporarily modifying kernel boot parameters</title>
+    <para>
+      Test a kernel boot parameter, a temporary change is helpful. Such a
+      change is only applied for the current boot process, not for any
+      subsequent boot processes.
+    </para>
+    <procedure>
+      <para>
+        To temporarily disable the splash screen, proceed as follows:
+      </para>
+      <step>
+        <para>
+          Switch on your computer to start the boot process.
+        </para>
+      </step>
+      <step>
+        <para>
+          In the &grub; boot screen, highlight the entry you want to modify
+          using the arrow keys <keycap function="up"/> and
+          <keycap function="down"/>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Press the <keycap>E</keycap> key. You are presented with an editor
+          and the content of the selected boot entry. It looks similiar to the
+          following:
+        </para>
+<screen>setparams '&productname; &productnumber;'
    # ... some lines pruned ...
    echo 'Loading kernel ...'
-   linuxefi /boot/vmlinuz-5.3.18-lp152.87-default root=UUID=0dfcff43-7a61-4ecd-8df5-8dc56ee3d9f2  <emphasis role="strong">splash=silent</emphasis> resume=/dev/disk/by-uuid/0399f92e-5ed4-48c8-9db0-11e52c5cb0cd quiet mitigations=auto
+   linuxefi /boot/vmlinuz-5.14.21-150500.53-default root=UUID=56d052b3-9148-4161-8065-3d97378d5783  <emphasis role="strong">splash=silent</emphasis> resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet security=apparmor crashkernel=301M,high crashkernel=72M,low
    </screen>
-   </step>
-   <step>
+      </step>
+      <step>
+        <para>
+          Search for the string <literal>splash=silent</literal> and remove it.
+        </para>
+      </step>
+      <step>
+        <para>
+          To boot the entry, press <keycap>F10</keycap> or <keycombo>
+          <keycap function="control"/> <keycap>X</keycap> </keycombo>.
+        </para>
+        <para>
+          To discard the changes and start anew, press the
+          <keycap function="escape"/> key.
+        </para>
+      </step>
+    </procedure>
     <para>
-     Search for the string <literal>splash=silent</literal> and remove it.
+      During reboot, the splash screen is not shown.
     </para>
-   </step>
-   <step>
+  </section>
+  <section xml:id="modify-kernel-boot-parameters-permanently">
+    <title>Permanently modifying kernel boot parameters</title>
     <para>
-     To boot the entry, press <keycap>F10</keycap> or <keycombo>
-      <keycap function="control"/>
-      <keycap>X</keycap>
-     </keycombo>.
+      If a change needs to be applied for every boot process, use this
+      procedure.
     </para>
+    <procedure>
+      <para>
+        To permanently disable the splash screen, proceed as follows:
+      </para>
+      <step>
+        <para>
+          In your running system, open a shell and view the current command
+          line used by the Linux kernel:
+        </para>
+<screen>&prompt.root;<command>cat</command> /proc/cmdline
+  BOOT_IMAGE=/boot/vmlinuz-5.14.21-150500.53-default root=UUID=56d052b3-9148-4161-8065-3d97378d5783 splash=silent resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet security=apparmor crashkernel=301M,high crashkernel=72M,low
+</screen>
+        <para>
+          As you can see, the string <literal>splash=silent</literal> is
+          printed. We will remove it for the next boot.
+        </para>
+      </step>
+      <step>
+        <para>
+          Open the file <filename>/etc/default/grub</filename>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Look for the line <literal>GRUB_CMDLINE_LINUX_DEFAULT=</literal>.
+          Remove the string <literal>splash=silent</literal> from this line and
+          save the file.
+        </para>
+      </step>
+      <step>
+        <para>
+          Run:
+        </para>
+<screen>&prompt.root;<command>grub2-mkconfig</command> -o /boot/grub2/grub.cfg</screen>
+      </step>
+      <step>
+        <para>
+          Reboot. You should see that the splash screen does not appear.
+        </para>
+        <para>
+          After your computer has successfully booted, log in and check your
+          boot commandline:
+        </para>
+<screen>&prompt.root;<command>cat</command> /proc/cmdline
+        BOOT_IMAGE=/boot/vmlinuz-5.14.21-150500.53-default
+        root=UUID=56d052b3-9148-4161-8065-3d97378d5783
+        resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet
+        security=apparmor crashkernel=301M,high crashkernel=72M,low
+        </screen>
+        <para>
+          There is no splash screen anymore.
+        </para>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="troubleshooting-modify-kernel-boot-parameters">
+    <title>Troubleshooting kernel boot parameter modifications</title>
     <para>
-     To discard the changes and start anew, press the <keycap function="escape"/> key.
+      While modifying kernel boot parameters, challenges may arise, potentially
+      leading to system instability or boot failure. A few troubleshooting
+      steps to address such issues are listed below:
     </para>
-   </step>
-  </procedure>
-  <para>
-   During reboot, the splash screen is not shown.
-  </para>
- </section>
-
- <section xml:id="modify-boot-parameters-permanently">
-  <title>Permanently modifying kernel boot parameters</title>
-  <para>
-   If a change needs to be applied for every boot process, use this procedure.
-  </para>
-  <procedure>
-   <para>
-    To permanently disable the splash screen, proceed as follows:
-   </para>
-   <step>
-    <para>
-     In your running system, open a shell and view the current command line used by the
-     Linux kernel: </para>
-    <screen>&prompt.root;<command>cat</command> /proc/cmdline
-BOOT_IMAGE=/boot/vmlinuz-5.3.18-59.19-default root=UUID=7e957c2e-fd30-4160-a771-dbc1bc679cf2 splash=silent quiet mitigations=auto</screen>
-    <para>
-     As you can see, the string <literal>splash=line</literal> is printed.
-     We will remove it for the next boot.
-    </para>
-   </step>
-   <step>
-    <para>
-     Open the file <filename>/etc/default/grub</filename>.
-    </para>
-   </step>
-   <step>
-    <para>
-     Look for the line <literal>GRUB_CMDLINE_LINUX_DEFAULT=</literal>.
-     Remove the string <literal>splash=line</literal> from this line and save the file.
-    </para>
-   </step>
-   <step>
-    <para>Run:</para>
-    <remark>toms 2021-08-27: not sure if to use update-bootloader or grub2-mkconfig</remark>
-    <screen>&prompt.root;<command>update-bootloader --refresh</command></screen>
-<!-- <screen>&prompt.root;<command>grub2-mkconfig</command> -o /boot/grub2/grub.cfg</screen>  -->
-   </step>
-   <step>
-    <para>
-     Reboot. You should see that the splash screen does not appear.
-    </para>
-    <para>
-     After your computer has successfully booted, log in and check your boot
-     commandline:
-    </para>
-    <screen>&prompt.root;<command>cat</command> /proc/cmdline
-BOOT_IMAGE=/boot/vmlinuz-5.3.18-59.19-default root=UUID=7e957c2e-fd30-4160-a771-dbc1bc679cf2 mitigations=auto</screen>
-    <para>
-     There is no splash string anymore.
-    </para>
-   </step>
-  </procedure>
- </section>
-
-<!--
- <section xml:id="summary-modify-boot-parameters">
-  <title>Summary</title>
-  <para> </para>
- </section>
--->
-
-<!-- <section xml:id="troubleshooting-modify-boot-parameters">
-  <title>Troubleshooting</title>
-  <para>A paragraph of text.</para>
-  <variablelist>
-   <varlistentry>
-    <term>Problem phrased as question</term>
-    <listitem>
-     <para> A paragraph of text. </para>
-    </listitem>
-   </varlistentry>
-   <varlistentry>
-    <term>Another problem phrased as question</term>
-    <listitem>
-     <para> Another paragraph of text. </para>
-    </listitem>
-   </varlistentry>
-  </variablelist>
- </section>-->
-
-<!--
- <section xml:id="next-modify-boot-parameters">
-  <title>Next steps</title>
-  <itemizedlist>
-   <listitem>
-    <para> An </para>
-   </listitem>
-   <listitem>
-    <para> Unordered </para>
-   </listitem>
-   <listitem>
-    <para> List </para>
-   </listitem>
-  </itemizedlist>
- </section>
--->
-
- <section xml:id="related-modify-boot-parameters">
-  <title>Related topics</title>
-  <itemizedlist>
-   <listitem>
-    <para>
-     <link
-      xlink:href="https://github.com/torvalds/linux/blob/master/Documentation/admin-guide/kernel-parameters.txt"
-     />
-    </para>
-   </listitem>
-  </itemizedlist>
- </section>
+    <itemizedlist>
+      <listitem>
+        <formalpara>
+          <title>Incorrect parameter</title>
+          <para>
+            Ensure that the parameters' syntax and spelling are accurate,
+            correcting any mistakes or typos in the configurations.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Boot failure</title>
+          <para>
+            If the system fails to boot, use a previous stable snapshot to
+            revert the changes and update the &grub; configuration file to
+            restore system functionality.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>System instability</title>
+          <para>
+            If the system exhibits instability or unexpected behavior, undo the
+            changes made to the kernel parameters and monitor the system for
+            stability.
+          </para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="related-modify-boot-parameters">
+    <title>Related articles</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Detailed information about the parameters in the &grub; configuration
+          file for &suselinux; is available at
+          <link
+        xlink:href="https://documentation.suse.com/sles/html/SLES-all/cha-grub2.html#sec-grub2-etc-default-grub"></link>.
+        </para>
+        <para>
+          Detailed information of boot parameters for &suselinux; is available
+          at
+          <link xlink:href="https://documentation.suse.com/sles/html/SLES-all/cha-boot-parameters.html"></link>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Source documentation for kernel parameters is available at
+          <link xlink:href="https://www.kernel.org/doc/Documentation/admin-guide/kernel-parameters.txt"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
 </article>
