@@ -16,7 +16,7 @@
     <meta name="maintainer" content="" its:translate="no"/>
     <abstract>
       <para>
-        Kernel boot parameters are configurations passed to the &suselinux;
+        Kernel boot parameters are configurations passed to the &productname;
         kernel during the boot process for &grub;, instructing it on how to
         behave or configure certain features.
       </para>
@@ -100,18 +100,18 @@
   <section xml:id="modify-kernel-boot-parameters-confifuration">
     <title>Where to configure kernel boot parameters?</title>
     <warning>
-      <title>Information not directly applicable to temporary changes in kernel boot parameters</title>
+      <title>Information for permanent changes in kernel boot parameters</title>
       <para>
-        The information in this section is useful only to modify kernel boot
-        parameters for multiple boot processes. To make temporary changes in
-        the kernel boot parameters for the current boot process, ignore the
+        The information in this section is only useful for permanently changing
+        kernel boot parameters at boot time. To make temporary changes in the
+        kernel boot parameters for the current boot process, ignore the
         information in this section.
       </para>
     </warning>
     <para>
       Kernel boot parameters can be configured in the &grub; configuration file
       <filename>/etc/default/grub</filename>. A sample &grub; configuration
-      file for &suselinux; is given below for convenient reference:
+      file for &productname; is given below for convenient reference:
     </para>
 <screen>
 # If you change this file, run 'grub2-mkconfig -o /boot/grub2/grub.cfg' afterwards to update
