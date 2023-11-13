@@ -13,7 +13,7 @@
  xmlns:trans="http://docbook.org/ns/transclusion">
   <info>
     <title>Modifying kernel boot parameters</title>
-    <meta name="maintainer" content="" its:translate="no"/>
+    <meta name="souvik.sarkar@suse.com" content="" its:translate="no"/>
     <abstract>
       <para>
         Kernel boot parameters are configurations passed to the &productname;
