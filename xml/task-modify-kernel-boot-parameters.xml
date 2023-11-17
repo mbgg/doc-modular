@@ -66,7 +66,7 @@
     <itemizedlist>
       <listitem>
         <para>
-          <literal>root=</literal>: Specifies the path to the root filesystem.
+          <literal>root=</literal>: Specifies the path to the root file system.
         </para>
       </listitem>
       <listitem>
@@ -213,6 +213,63 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
       As an example, we disable the splash screen that you can see during the
       boot.
     </para>
+    <tip>
+      <title>Do not confuse kernel boot parameters with linuxrc parameters</title>
+      <para>
+        In &productname;, the <literal>linuxrc</literal> is a script that runs
+        during the boot process before the systems's root file system is
+        mounted, and serves as the initial RAM disk (initrd) entry point. The
+        <literal>linuxrc</literal> parameters are used within this script to
+        configure system further before transitioning to the actual root file
+        system.
+      </para>
+      <para>
+        Similar to kernel boot parameters, you can pass linuxrc parameters
+        either using the command line, or using configuration files. The
+        entries for linuxrc parameters are similar in appearance to that of the
+        kernel boot parameters.
+      </para>
+      <para>
+        To highlight the similarity in appearance, observe the following
+        examples:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <literal>rd.driver.blacklist=</literal>: Specifies drivers to be
+            blacklisted in the initrd. For example,
+            <literal>rd.driver.blacklist=nouveau</literal> prevents the nouveau
+            graphics driver from loading.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>rd.break</literal>: Interrupts the boot process and drops
+            the system to a shell for debugging purposes within the initrd.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>rd.retry=</literal>: Specifies the number of retries for
+            device scanning in the initrd. For example,
+            <literal>rd.retry=3</literal>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>rd.luks=1</literal>: Activates support for encrypted
+            devices in the initrd.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        However, the kernel boot parameters and the linuxrc parameters are
+        different concepts. To learn more about the linuxrc parameters, refer
+        to <link
+        xlink:href="https://en.opensuse.org/SDB:Linuxrc">the
+        official linuxrc documentation</link>.
+      </para>
+    </tip>
   </section>
   <section xml:id="modify-kernel-boot-parameters-requirements">
     <title>Requirements</title>
@@ -264,7 +321,7 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
 <screen>setparams '&productname; &productnumber;'
    # ... some lines pruned ...
    echo 'Loading kernel ...'
-   linuxefi /boot/vmlinuz-5.14.21-150500.53-default root=UUID=56d052b3-9148-4161-8065-3d97378d5783  <emphasis role="strong">splash=silent</emphasis> resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet security=apparmor crashkernel=301M,high crashkernel=72M,low
+   linuxefi /boot/vmlinuz-<replaceable>KERNEL_VERSION</replaceable> root=UUID=56d052b3-9148-4161-8065-3d97378d5783  <emphasis role="strong">splash=silent</emphasis> resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet security=apparmor crashkernel=301M,high crashkernel=72M,low
    </screen>
       </step>
       <step>
@@ -303,7 +360,7 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
           line used by the Linux kernel:
         </para>
 <screen>&prompt.root;<command>cat</command> /proc/cmdline
-  BOOT_IMAGE=/boot/vmlinuz-5.14.21-150500.53-default root=UUID=56d052b3-9148-4161-8065-3d97378d5783 splash=silent resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet security=apparmor crashkernel=301M,high crashkernel=72M,low
+  BOOT_IMAGE=/boot/vmlinuz-<replaceable>KERNEL_VERSION</replaceable> root=UUID=56d052b3-9148-4161-8065-3d97378d5783 splash=silent resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet security=apparmor crashkernel=301M,high crashkernel=72M,low
 </screen>
         <para>
           As you can see, the string <literal>splash=silent</literal> is
@@ -337,7 +394,7 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
           boot commandline:
         </para>
 <screen>&prompt.root;<command>cat</command> /proc/cmdline
-        BOOT_IMAGE=/boot/vmlinuz-5.14.21-150500.53-default
+        BOOT_IMAGE=/boot/vmlinuz-<replaceable>KERNEL_VERSION</replaceable>
         root=UUID=56d052b3-9148-4161-8065-3d97378d5783
         resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet
         security=apparmor crashkernel=301M,high crashkernel=72M,low
