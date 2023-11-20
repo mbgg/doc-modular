@@ -23,6 +23,9 @@ type="application/relax-ng-compact-syntax"?>
     </resource>
     <resource href="../concepts/cockpit-network-bonds.xml" xml:id="_cockpit-network-bonds">
       <description>Network bonds</description>
+    </resource> 
+    <resource href="../concepts/networking-about-bridges.xml" xml:id="_networking-about-bridges">
+      <description>Network bonds</description>
     </resource>
     <resource href="../concepts/cockpit-selinux.xml" xml:id="_cockpit-selinux">
       <description>SELinux</description>
@@ -394,7 +397,14 @@ type="application/relax-ng-compact-syntax"?>
       <module renderas="section">
         <merge>
            <title>Managing network bridges using &cockpit;</title>
-              </merge>
+              </merge>networking-about-bridges
+              <module renderas="section" resourceref="_networking-about-bridges">
+                <merge>
+                  <abstract>
+                    <para/>
+                  </abstract>
+                </merge>
+              </module>
         <module renderas="section" resourceref="_cockpit-creating-bridges">
           <merge>
             <abstract>
