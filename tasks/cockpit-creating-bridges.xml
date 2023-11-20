@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+[
+  <!ENTITY % entities SYSTEM "../common/generic-entities.ent">
+    %entities;
+]>
+<!-- refers to legacy doc: <add github link to legacy doc piece, if applicable> -->
+<!-- point back to this document with a similar comment added to your legacy doc piece -->
+<!-- refer to README.md for file and id naming conventions -->
+<!-- metadata is dealt with on the assembly level -->
+<topic xml:id="cockpit-creating-bridges"
+ role="task" xml:lang="en"
+ xmlns="http://docbook.org/ns/docbook" version="5.2"
+ xmlns:its="http://www.w3.org/2005/11/its"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:trans="http://docbook.org/ns/transclusion">
+  <info>
+    <title>Creating network bridges</title>
+    <!-- add author's e-mail -->
+    <meta name="maintainer" content="jsindelarova@suse.com" its:translate="no"/>
+    <abstract><!-- can be changed via merge in the assembly -->
+      <para>
+       The topic covers creating of network bridges using the &cockpit; web inteface.
+      </para>
+    </abstract>
+  </info>
+  <para>
+    To create a network bridge, proceed as follows:
+  </para>
+  <procedure>
+    <step>
+      <para>
+        Navigate to the <guimenu>Networking</guimenu> page.
+      </para>
+    </step>
+    <step>
+      <para>
+        In the <guimenu>Interfaces</guimenu> view, click <guimenu>Add
+        bridge.</guimenu>
+      </para>
+      </step>
+    <step>
+      <para>
+        Specify the following:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>Name</term>
+          <listitem>
+            <para>
+              Specify a unique name of the bridge.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Ports</term>
+          <listitem>
+            <para>
+              Select interfaces to be included in the bridge.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Spanning tree protocol (STP)</term>
+          <listitem>
+            <para>
+              STP is a network protocol used for Ethernet networks that
+              prevents bridge loops by setting a preferred link whenever
+              network switches are connected with several links. This
+              preferred link is used for all Ethernet traffic unless it
+              fails. In that case, a redundant link is used instead. For
+              details regarding STP, see
+              <link xlink:href="https://en.wikipedia.org/wiki/Spanning_Tree_Protocol">STP</link>.
+            </para>
+            <para>
+              If you enable the STP protocol, you can edit the following
+              settings:
+            </para>
+            <variablelist>
+              <varlistentry>
+                <term>STP priority</term>
+                <listitem>
+                  <para>
+                    The lower the priority, the higher the probability of the
+                    switch to become the root switch.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>STP forward delay</term>
+                <listitem>
+                  <para>
+                    Specify the time spent in the listening and learning
+                    state (in seconds). The default value is 15&nbsp;s, but
+                    you can use any value between 4 and 30&nbsp;s.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>STP hello time</term>
+                <listitem>
+                  <para>
+                    Specify the time between each bridge protocol data unit
+                    (BDPU) that is sent on a port (in seconds). The default
+                    value is 2&nbsp;s, but the recommended range is 1 to
+                    10&nbsp;s.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>STP maximum message age</term>
+                <listitem>
+                  <para>
+                    Specify the maximum length of time that passes before a
+                    bridge port saves its configuration BPDU information.
+                  </para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </step>
+  </procedure>
+</topic>

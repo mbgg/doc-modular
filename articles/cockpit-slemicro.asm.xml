@@ -98,8 +98,11 @@ type="application/relax-ng-compact-syntax"?>
     <resource href="../tasks/cockpit-managing-bonds.xml" xml:id="_cockpit-managing-bonds">
       <description>Managing network bonds</description>
     </resource>
-    <resource href="../tasks/cockpit-managing-bridges.xml" xml:id="_cockpit-managing-bridge">
+    <resource href="../tasks/cockpit-modifying-bridges.xml" xml:id="_cockpit-modifying-bridges">
       <description>Managing network bridges</description>
+    </resource>
+      <resource href="../tasks/cockpit-creating-bridges.xml" xml:id="_cockpit-creating-bridges">
+        <description>Managing network bridges</description>
     </resource>
     <resource href="../tasks/cockpit-managing-vlans.xml" xml:id="_cockpit-managing-vlans">
       <description>Managing network VLANs</description>
@@ -388,7 +391,25 @@ type="application/relax-ng-compact-syntax"?>
           </merge>
         </module>
       </module>
-      <module renderas="section" resourceref="_cockpit-managing-bridge"/>
+      <module renderas="section">
+        <merge>
+           <title>Managing network bridges using &cockpit;</title>
+              </merge>
+        <module renderas="section" resourceref="_cockpit-creating-bridges">
+          <merge>
+            <abstract>
+              <para/>
+            </abstract>
+          </merge>
+        </module>
+        <module renderas="section" resourceref="_cockpit-modifying-bridges">
+          <merge>
+            <abstract>
+              <para/>
+            </abstract>
+          </merge>
+        </module>
+        </module>
       <module renderas="section" resourceref="_cockpit-managing-vlans"/>
     </module>
     <module renderas="section" resourceref="_cockpit-containers-plugin">

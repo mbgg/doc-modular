@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+[
+  <!ENTITY % entities SYSTEM "../common/generic-entities.ent">
+    %entities;
+]>
+<!-- refers to legacy doc: <add github link to legacy doc piece, if applicable> -->
+<!-- point back to this document with a similar comment added to your legacy doc piece -->
+<!-- refer to README.md for file and id naming conventions -->
+<!-- metadata is dealt with on the assembly level -->
+<topic xml:id="cockpit-modifying-bridges"
+ role="task" xml:lang="en"
+ xmlns="http://docbook.org/ns/docbook" version="5.2"
+ xmlns:its="http://www.w3.org/2005/11/its"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:trans="http://docbook.org/ns/transclusion">
+  <info>
+    <title>Modifying or deleting existing bridges</title><!-- can be changed via merge
+in the assembly -->
+    <!-- add author's e-mail -->
+    <meta name="maintainer" content="jsindelarova@suse.com" its:translate="no"/>
+    <abstract><!-- can be changed via merge in the assembly -->
+      <para>
+       Introductory text
+      </para>
+    </abstract>
+  </info>
+  <para>
+    To modify or delete a bridge, proceed as follows:
+  </para>
+  <procedure>
+    <step>
+      <para>
+        Navigate to the <guimenu>Networking</guimenu> page.
+      </para>
+    </step>
+    <step>
+      <para>
+        In the <guimenu>Interfaces</guimenu> view, click the bridge name to
+        open the details.
+      </para>
+       </step>
+    <step>
+      <para>
+        There you can delete the bridge by clicking
+        <guimenu>Delete</guimenu>, or modify it by changing any of the
+        following details:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>General</term>
+          <listitem>
+            <para>
+              The bridge connects automatically by default. To disable the
+              automatic connection, clear the option.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>IPv4 and IPv6</term>
+          <listitem>
+            <para>
+              After clicking <guimenu>edit</guimenu>, you can set the IP
+              address and configure a specific DNS, DNS search domain and
+              Routes.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Bridge</term>
+          <listitem>
+            <para>
+              By clicking <guimenu>edit</guimenu>, you can edit all
+              parameters of the bridge.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </step>
+  </procedure>
+</topic>
