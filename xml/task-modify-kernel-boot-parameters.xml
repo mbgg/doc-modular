@@ -96,122 +96,9 @@
         </para>
       </listitem>
     </itemizedlist>
-  </section>
-  <section xml:id="modify-kernel-boot-parameters-confifuration">
-    <title>Where to configure kernel boot parameters?</title>
-    <warning>
-      <title>Information for permanent changes in kernel boot parameters</title>
-      <para>
-        The information in this section is only useful for permanently changing
-        kernel boot parameters at boot time. To make temporary changes in the
-        kernel boot parameters for the current boot process, ignore the
-        information in this section.
-      </para>
-    </warning>
     <para>
-      Kernel boot parameters can be configured in the &grub; configuration file
-      <filename>/etc/default/grub</filename>. A sample &grub; configuration
-      file for &productname; is given below for convenient reference:
-    </para>
-<screen>
-# If you change this file, run 'grub2-mkconfig -o /boot/grub2/grub.cfg' afterwards to update
-# /boot/grub2/grub.cfg.
-
-# Uncomment to set your own custom distributor. If you leave it unset or empty, the default
-# policy is to determine the value from /etc/os-release
-GRUB_DISTRIBUTOR=
-GRUB_DEFAULT=saved
-GRUB_HIDDEN_TIMEOUT=0
-GRUB_HIDDEN_TIMEOUT_QUIET=true
-GRUB_TIMEOUT=8
-GRUB_CMDLINE_LINUX_DEFAULT="splash=silent resume=/dev/disk/by-uuid/73877b75-45cb-4cfb-b301-10b7a1d4180d preempt=full mitigations=auto quiet security=apparmor"
-GRUB_CMDLINE_LINUX=""
-
-# Uncomment to automatically save last booted menu entry in GRUB2 environment
-
-# variable `saved_entry'
-# GRUB_SAVEDEFAULT="true"
-#Uncomment to enable BadRAM filtering, modify to suit your needs
-
-# This works with Linux (no patch required) and with any kernel that obtains
-# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
-# GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
-#Uncomment to disable graphical terminal (grub-pc only)
-
-GRUB_TERMINAL="gfxterm"
-# The resolution used on graphical terminal
-#note that you can use only modes which your graphic card supports via VBE
-
-# you can see them in real GRUB with the command `vbeinfo'
-GRUB_GFXMODE="auto"
-# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
-# GRUB_DISABLE_LINUX_UUID=true
-#Uncomment to disable generation of recovery mode menu entries
-
-# GRUB_DISABLE_RECOVERY="true"
-#Uncomment to get a beep at grub start
-
-# GRUB_INIT_TUNE="480 440 1"
-GRUB_BACKGROUND=
-GRUB_THEME=/boot/grub2/themes/openSUSE/theme.txt
-SUSE_BTRFS_SNAPSHOT_BOOTING="true"
-GRUB_USE_LINUXEFI="true"
-GRUB_DISABLE_OS_PROBER="false"
-GRUB_ENABLE_CRYPTODISK="n"
-GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
-</screen>
-    <para>
-      In the sample configuration presented above, the most commonly modified
-      entries are:
-    </para>
-    <itemizedlist>
-      <listitem>
-<screen>GRUB_CMDLINE_LINUX_DEFAULT="splash=silent resume=/dev/disk/by-uuid/73877b75-45cb-4cfb-b301-10b7a1d4180d preempt=full mitigations=auto quiet security=apparmor"</screen>
-      </listitem>
-      <listitem>
-<screen>GRUB_CMDLINE_LINUX=""</screen>
-      </listitem>
-    </itemizedlist>
-    <para>
-      For example, you can modify them to look like the following:
-    </para>
-    <itemizedlist>
-      <listitem>
-<screen>GRUB_CMDLINE_LINUX_DEFAULT="quiet"</screen>
-      </listitem>
-      <listitem>
-<screen>GRUB_CMDLINE_LINUX="root=/dev/sda1 quiet nomodeset acpi=off"</screen>
-      </listitem>
-    </itemizedlist>
-  </section>
-  <section xml:id="modify-kernel-boot-parameters-different-methods">
-    <title>Methods of modifying kernel boot parameters</title>
-    <para>
-      There are two methods to modify your kernel boot parameters:
-    </para>
-    <itemizedlist>
-      <listitem>
-        <formalpara>
-          <title>Temporarily</title>
-          <para>
-            After you have changed the kernel boot parameters, the change are
-            applied for the upcoming boot process. However, it does not survive
-            subsequent boot processes.
-          </para>
-        </formalpara>
-      </listitem>
-      <listitem>
-        <formalpara>
-          <title>Permanently</title>
-          <para>
-            Your change is applied for each boot process.
-          </para>
-        </formalpara>
-      </listitem>
-    </itemizedlist>
-    <para>
-      As an example, we disable the splash screen that you can see during the
-      boot.
+      Source documentation for kernel parameters is available at
+      <link xlink:href="https://www.kernel.org/doc/Documentation/admin-guide/kernel-parameters.txt"/>
     </para>
     <tip>
       <title>Do not confuse kernel boot parameters with linuxrc parameters</title>
@@ -238,8 +125,8 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
           <para>
             <literal>rd.driver.blacklist=</literal>: Specifies drivers to be
             blacklisted in the initrd. For example,
-            <literal>rd.driver.blacklist=nouveau</literal> prevents the nouveau
-            graphics driver from loading.
+            <literal>rd.driver.blacklist=nouveau</literal> prevents the
+            <literal>nouveau</literal> graphics driver from loading.
           </para>
         </listitem>
         <listitem>
@@ -265,38 +152,64 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
       <para>
         However, the kernel boot parameters and the linuxrc parameters are
         different concepts. To learn more about the linuxrc parameters, refer
-        to <link
-        xlink:href="https://en.opensuse.org/SDB:Linuxrc">the
-        official linuxrc documentation</link>.
+        to
+        <link xlink:href="https://documentation.suse.com/sles/html/SLES-all/appendix-linuxrc.html" os="sles"></link><link
+        xlink:href="https://en.opensuse.org/SDB:Linuxrc" os="non-sles"></link>.
       </para>
     </tip>
   </section>
-  <section xml:id="modify-kernel-boot-parameters-requirements">
-    <title>Requirements</title>
+  <section xml:id="modify-kernel-boot-parameters-different-methods">
+    <title>Methods of modifying kernel boot parameters</title>
+    <para>
+      There are two methods to modify your kernel boot parameters:
+    </para>
     <itemizedlist>
       <listitem>
-        <para>
-          To only temporarily modify the kernel boot parameters, no
-          prerequisites required.
-        </para>
+        <formalpara>
+          <title>Temporarily</title>
+          <para>
+            After you have changed the kernel boot parameters, the changes are
+            applied for the upcoming boot process. However, it does not survive
+            subsequent boot processes.
+          </para>
+        </formalpara>
       </listitem>
       <listitem>
-        <para>
-          To permanently modify the kernel boot parameters, you need write
-          access to your root partition and the <filename>/etc</filename>
-          directory.
-        </para>
+        <formalpara>
+          <title>Permanently</title>
+          <para>
+            Your changes are applied to all subsequent boot processes, unless
+            modified further.
+          </para>
+        </formalpara>
       </listitem>
     </itemizedlist>
+    <para>
+      As an example, we disable the splash screen that you can see during the
+      boot.
+    </para>
   </section>
-  <section xml:id="modify-kernel-boot-parameters-temporarily">
+    <section xml:id="modify-kernel-boot-parameters-temporarily">
     <title>Temporarily modifying kernel boot parameters</title>
     <para>
       To test a kernel boot parameter, a temporary change is helpful. Such a
-      change is only applied for the current boot process and not for any
-      subsequent boot processes. In the following example, the splash screen is
-      temporarily disabled.
+      change is applied only to the current boot process. In the following
+      example, the splash screen is temporarily disabled.
     </para>
+    <para>
+      <emphasis role="strong">Requirements</emphasis>: To only temporarily
+      modify the kernel boot parameters, no prerequisites are required.
+    </para>
+    <tip>
+      <para>
+        Before modifying the kernel boot parameters, ensure that you create a
+        copy of the existing stable configuration somewhere outside of your
+        system. If the boat loader gets corrupted and your system fails to
+        boot, or you face problems after booting your system, it helps you
+        compare and restore the parameters to the last known working
+        configuration.
+      </para>
+    </tip>
     <procedure>
       <step>
         <para>
@@ -317,10 +230,14 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
           following:
         </para>
 <screen>setparams '&productname; &productnumber;'
-   # ... some lines pruned ...
-   echo 'Loading kernel ...'
-   linuxefi /boot/vmlinuz-<replaceable>KERNEL_VERSION</replaceable> root=UUID=56d052b3-9148-4161-8065-3d97378d5783  <emphasis role="strong">splash=silent</emphasis> resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet security=apparmor crashkernel=301M,high crashkernel=72M,low
-   </screen>
+   ...
+   ...
+   echo 'Loading Linux <replaceable>KERNEL_VERSION</replaceable> ...'
+linux /boot/vmlinuz-<replaceable>KERNEL_VERSION</replaceable>
+root=UUID=56d052b3-9148-4161-8065-3d97378d5783 ${extra_cmdline} <emphasis
+role="strong">splash=silent</emphasis> resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e
+quiet security=apparmor crashkernel=301M,high crashkernel=72M,low mitigations=auto
+</screen>
       </step>
       <step>
         <para>
@@ -339,66 +256,69 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
       </step>
     </procedure>
     <para>
-      During reboot, the splash screen is not shown.
+      During reboot, the splash screen is not displayed.
     </para>
   </section>
   <section xml:id="modify-kernel-boot-parameters-permanently">
     <title>Permanently modifying kernel boot parameters</title>
     <para>
-      If a change needs to be applied for every boot process, use this
-      procedure.
+      Use this procedure if a change needs to be applied for all subsequent
+      boot processes. In the following example, the splash screen is
+      permanently disabled, unless restored to the original settings using the
+      same procedure.
     </para>
-    <procedure>
+    <para>
+      <emphasis role="strong">Requirements</emphasis>: To permanently modify
+      the kernel boot parameters, you have root or equivalent privileges.
+    </para>
+    <tip>
       <para>
-        To permanently disable the splash screen, proceed as follows:
+        Before modifying the kernel boot parameters, ensure that you create a
+        copy of the existing stable configuration somewhere outside of your
+        system. If the boat loader gets corrupted and your system fails to
+        boot, or you face problems after booting your system, it helps you
+        compare and restore the parameters to the last known working
+        configuration.
       </para>
+    </tip>
+    <procedure>
       <step>
         <para>
-          In your running system, open a root shell and view the current
-          command line used by the Linux kernel:
+          Log in to your system as root, or switch to a user with equivalent
+          administrative priviliges after logging in to your system.
         </para>
-<screen>&prompt.root;<command>cat</command> /proc/cmdline
-  BOOT_IMAGE=/boot/vmlinuz-<replaceable>KERNEL_VERSION</replaceable> root=UUID=56d052b3-9148-4161-8065-3d97378d5783 splash=silent resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet security=apparmor crashkernel=301M,high crashkernel=72M,low
-</screen>
+      </step>
+      <step>
+        <para>
+          In your running system, open a root shell and run the following
+          command:
+        </para>
+<screen>&prompt.root;<command>yast bootloader</command></screen>
+        <para>
+          Alternatively, open the &yastcc; application and navigate to
+          <guimenu>System</guimenu> &gt; <guimenu>Boot Loader</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Under the <guimenu>Kernel Parameters</guimenu> tab, edit the string
+          for the <guimenu>Optional Kernel Command Line Parameter</guimenu>
+          field.
+        </para>
+<screen><emphasis role="strong">splash=silent</emphasis> resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e  quiet security=apparmor crashkernel=301M,high crashkernel=72M,low</screen>
         <para>
           As you can see, the string <literal>splash=silent</literal> is
-          printed. We will remove it for the next boot.
+          printed. Remove <literal>splash=silent</literal> from the string.
         </para>
       </step>
       <step>
         <para>
-          Open the file <filename>/etc/default/grub</filename>.
+          Select <guimenu>OK</guimenu> to save the bootloader configuration.
         </para>
-      </step>
-      <step>
-        <para>
-          Look for the line <literal>GRUB_CMDLINE_LINUX_DEFAULT=</literal>.
-          Remove the string <literal>splash=silent</literal> from this line and
-          save the file.
-        </para>
-      </step>
-      <step>
-        <para>
-          Run:
-        </para>
-<screen>&prompt.root;<command>grub2-mkconfig</command> -o /boot/grub2/grub.cfg</screen>
       </step>
       <step>
         <para>
           Reboot. You should see that the splash screen does not appear.
-        </para>
-        <para>
-          After your computer has successfully booted, log in and check your
-          boot commandline:
-        </para>
-<screen>&prompt.root;<command>cat</command> /proc/cmdline
-        BOOT_IMAGE=/boot/vmlinuz-<replaceable>KERNEL_VERSION</replaceable>
-        root=UUID=56d052b3-9148-4161-8065-3d97378d5783
-        resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet
-        security=apparmor crashkernel=301M,high crashkernel=72M,low
-        </screen>
-        <para>
-          There is no splash screen anymore.
         </para>
       </step>
     </procedure>
@@ -425,8 +345,8 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
           <title>Boot failure</title>
           <para>
             If the system fails to boot, use a previous stable snapshot to
-            revert the changes and update the &grub; configuration file to
-            restore system functionality.
+            rescue the syste and then revert the changes to restore system
+            functionality.
           </para>
         </formalpara>
       </listitem>
@@ -435,8 +355,9 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
           <title>System instability</title>
           <para>
             If the system exhibits instability or unexpected behavior, undo the
-            changes made to the kernel parameters and monitor the system for
-            stability.
+            changes made to the kernel boot parameters and reevert to the last
+            working configuration. It is also recommended to closely monitor
+            the system for stability.
           </para>
         </formalpara>
       </listitem>
@@ -463,12 +384,6 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
           os="sles"></link><link
           xlink:href="https://doc.opensuse.org/documentation/leap/startup/single-html/book-startup/index.html#cha-boot-parameters"
           os="non-sles"></link>.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Source documentation for kernel parameters is available at
-          <link xlink:href="https://www.kernel.org/doc/Documentation/admin-guide/kernel-parameters.txt"/>
         </para>
       </listitem>
     </itemizedlist>
