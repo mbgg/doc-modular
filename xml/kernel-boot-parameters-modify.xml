@@ -4,7 +4,7 @@
   <!ENTITY % entities SYSTEM "generic-entities.ent">
     %entities;
 ]>
-<article xml:id="task-modify-kernel-boot-parameters"
+<article xml:id="kernel-boot-parameters-modify"
  role="task" xml:lang="en"
  xmlns="http://docbook.org/ns/docbook" version="5.2"
  xmlns:its="http://www.w3.org/2005/11/its"
@@ -22,8 +22,39 @@
       </para>
     </abstract>
   </info>
-  <section xml:id="modify-kernel-boot-parameters-reason">
-    <title>Why modify kernel boot parameters?</title>
+  <section xml:id="kernel-boot-parameters-modification-requirements">
+   <title>Requirments</title>
+   <para>
+    Depending on whether you want to apply changes in kernel boot parameters to the upcoming boot
+    process, or all subsequent boot processes, the requirements are as follows:
+   </para>
+   <itemizedlist>
+    <listitem>
+     <para>
+      To change kernel boot parameters on an experimental basis only for the upcoming boot process,
+      there are no requirements.
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+      To change kernel boot parameters for all subsequent boot processes, you should have
+      <literal>root</literal> or equivalent administrative privileges.
+     </para>
+    </listitem>
+   </itemizedlist>
+   <tip>
+    <para>
+      Before modifying the kernel boot parameters, ensure that you create a
+      copy of the existing stable configuration somewhere outside of your
+      system. If the boat loader gets corrupted and your system fails to
+      boot, or you face problems after booting your system, the back up helps
+      you compare and restore the parameters to the last known working
+      configuration.
+    </para>
+  </tip>
+  </section>
+  <section xml:id="kernel-boot-parameters-modification-reasons">
+    <title>Reasons for kernel boot parameter modification</title>
     <para>
       Modifying kernel boot parameters is essential for achieving specific
       system configurations and addressing several scenarios, including:
@@ -51,17 +82,19 @@
         <formalpara>
           <title>Troubleshooting</title>
           <para>
-            Altering parameters to troubleshoot issues like graphics driver
+            Altering parameters to troubleshoot issues such as graphics driver
             problems, ensuring a more stable and functional system.
           </para>
         </formalpara>
       </listitem>
     </itemizedlist>
   </section>
-  <section xml:id="modify-kernel-boot-parameters-examples">
+  <section xml:id="kernel-boot-parameters-modification-examples">
     <title>Examples of commonly modified kernel boot parameters</title>
     <para>
-      Some commonly modified kernel boot parameters include the following:
+      There are many different kernel parameters that you can optionally modify
+      to customize your boot process. Based on you your use case, you can
+      consider few of the most commonly modified kernel boot parameters:
     </para>
     <itemizedlist>
       <listitem>
@@ -158,30 +191,28 @@
       </para>
     </tip>
   </section>
-  <section xml:id="modify-kernel-boot-parameters-different-methods">
+  <section xml:id="kernel-boot-parameters-modification-different-methods">
     <title>Methods of modifying kernel boot parameters</title>
     <para>
       There are two methods to modify your kernel boot parameters:
     </para>
     <itemizedlist>
       <listitem>
-        <formalpara>
-          <title>Temporarily</title>
-          <para>
-            After you have changed the kernel boot parameters, the changes are
-            applied for the upcoming boot process. However, it does not survive
-            subsequent boot processes.
-          </para>
-        </formalpara>
+        <para>
+          <emphasis role="strong">Temporarily</emphasis>: Temporary changes are
+          helpful to test the effect of modifying kernel boot parameters. After
+          you have changed the kernel boot parameters, the changes are applied
+          for the upcoming boot process. However, it does not survive
+          subsequent boot processes.
+        </para>
       </listitem>
       <listitem>
-        <formalpara>
-          <title>Permanently</title>
-          <para>
-            Your changes are applied to all subsequent boot processes, unless
-            modified further.
-          </para>
-        </formalpara>
+        <para>
+          <emphasis role="strong">Permanently</emphasis>: Use this procedure if
+          a change needs to be applied for all subsequent boot processes. Your
+          changes are applied to all subsequent boot processes, unless modified
+          further.
+        </para>
       </listitem>
     </itemizedlist>
     <para>
@@ -189,27 +220,8 @@
       boot.
     </para>
   </section>
-    <section xml:id="modify-kernel-boot-parameters-temporarily">
+  <section xml:id="kernel-boot-parameters-modify-temporarily">
     <title>Temporarily modifying kernel boot parameters</title>
-    <para>
-      To test a kernel boot parameter, a temporary change is helpful. Such a
-      change is applied only to the current boot process. In the following
-      example, the splash screen is temporarily disabled.
-    </para>
-    <para>
-      <emphasis role="strong">Requirements</emphasis>: To only temporarily
-      modify the kernel boot parameters, no prerequisites are required.
-    </para>
-    <tip>
-      <para>
-        Before modifying the kernel boot parameters, ensure that you create a
-        copy of the existing stable configuration somewhere outside of your
-        system. If the boat loader gets corrupted and your system fails to
-        boot, or you face problems after booting your system, it helps you
-        compare and restore the parameters to the last known working
-        configuration.
-      </para>
-    </tip>
     <procedure>
       <step>
         <para>
@@ -230,9 +242,9 @@
           following:
         </para>
 <screen>setparams '&productname; &productnumber;'
-   ...
-   ...
-   echo 'Loading Linux <replaceable>KERNEL_VERSION</replaceable> ...'
+  ...
+  ...
+  echo 'Loading Linux <replaceable>KERNEL_VERSION</replaceable> ...'
 linux /boot/vmlinuz-<replaceable>KERNEL_VERSION</replaceable>
 root=UUID=56d052b3-9148-4161-8065-3d97378d5783 ${extra_cmdline} <emphasis
 role="strong">splash=silent</emphasis> resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e
@@ -259,28 +271,8 @@ quiet security=apparmor crashkernel=301M,high crashkernel=72M,low mitigations=au
       During reboot, the splash screen is not displayed.
     </para>
   </section>
-  <section xml:id="modify-kernel-boot-parameters-permanently">
+  <section xml:id="kernel-boot-parameters-modify-permanently">
     <title>Permanently modifying kernel boot parameters</title>
-    <para>
-      Use this procedure if a change needs to be applied for all subsequent
-      boot processes. In the following example, the splash screen is
-      permanently disabled, unless restored to the original settings using the
-      same procedure.
-    </para>
-    <para>
-      <emphasis role="strong">Requirements</emphasis>: To permanently modify
-      the kernel boot parameters, you have root or equivalent privileges.
-    </para>
-    <tip>
-      <para>
-        Before modifying the kernel boot parameters, ensure that you create a
-        copy of the existing stable configuration somewhere outside of your
-        system. If the boat loader gets corrupted and your system fails to
-        boot, or you face problems after booting your system, it helps you
-        compare and restore the parameters to the last known working
-        configuration.
-      </para>
-    </tip>
     <procedure>
       <step>
         <para>
@@ -323,7 +315,7 @@ quiet security=apparmor crashkernel=301M,high crashkernel=72M,low mitigations=au
       </step>
     </procedure>
   </section>
-  <section xml:id="troubleshooting-modify-kernel-boot-parameters">
+  <section xml:id="kernel-boot-parameters-modification-troubleshooting">
     <title>Troubleshooting kernel boot parameter modifications</title>
     <para>
       While modifying kernel boot parameters, challenges may arise, potentially
@@ -363,7 +355,7 @@ quiet security=apparmor crashkernel=301M,high crashkernel=72M,low mitigations=au
       </listitem>
     </itemizedlist>
   </section>
-  <section xml:id="related-modify-boot-parameters">
+  <section xml:id="kernel-boot-parameters-modification-related-articles">
     <title>Related articles</title>
     <itemizedlist>
       <listitem>
