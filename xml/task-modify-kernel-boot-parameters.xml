@@ -292,14 +292,12 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
   <section xml:id="modify-kernel-boot-parameters-temporarily">
     <title>Temporarily modifying kernel boot parameters</title>
     <para>
-      Test a kernel boot parameter, a temporary change is helpful. Such a
-      change is only applied for the current boot process, not for any
-      subsequent boot processes.
+      To test a kernel boot parameter, a temporary change is helpful. Such a
+      change is only applied for the current boot process and not for any
+      subsequent boot processes. In the following example, the splash screen is
+      temporarily disabled.
     </para>
     <procedure>
-      <para>
-        To temporarily disable the splash screen, proceed as follows:
-      </para>
       <step>
         <para>
           Switch on your computer to start the boot process.
@@ -356,8 +354,8 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
       </para>
       <step>
         <para>
-          In your running system, open a root shell and view the current command
-          line used by the Linux kernel:
+          In your running system, open a root shell and view the current
+          command line used by the Linux kernel:
         </para>
 <screen>&prompt.root;<command>cat</command> /proc/cmdline
   BOOT_IMAGE=/boot/vmlinuz-<replaceable>KERNEL_VERSION</replaceable> root=UUID=56d052b3-9148-4161-8065-3d97378d5783 splash=silent resume=/dev/disk/by-uuid/69ff0e54-23a7-4ba8-8983-5a29c54ffa5e mitigations=auto quiet security=apparmor crashkernel=301M,high crashkernel=72M,low
@@ -458,8 +456,8 @@ GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
       </listitem>
       <listitem>
         <para>
-          Detailed information of boot parameters for &productname; is available
-          at
+          Detailed information of boot parameters for &productname; is
+          available at
           <link
           xlink:href="https://documentation.suse.com/sles/html/SLES-all/cha-boot-parameters.html"
           os="sles"></link><link
