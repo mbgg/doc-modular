@@ -23,35 +23,27 @@
     </abstract>
   </info>
   <section xml:id="kernel-boot-parameters-modification-requirements">
-   <title>Requirments</title>
-   <para>
-    Depending on whether you want to apply changes in kernel boot parameters to the upcoming boot
-    process, or all subsequent boot processes, the requirements are as follows:
-   </para>
-   <itemizedlist>
-    <listitem>
-     <para>
-      To change kernel boot parameters on an experimental basis only for the upcoming boot process,
-      there are no requirements.
-     </para>
-    </listitem>
-    <listitem>
-     <para>
-      To change kernel boot parameters for all subsequent boot processes, you should have
-      <literal>root</literal> or equivalent administrative privileges.
-     </para>
-    </listitem>
-   </itemizedlist>
-   <tip>
+    <title>Requirments</title>
     <para>
-      Before modifying the kernel boot parameters, ensure that you create a
-      copy of the existing stable configuration somewhere outside of your
-      system. If the boat loader gets corrupted and your system fails to
-      boot, or you face problems after booting your system, the back up helps
-      you compare and restore the parameters to the last known working
-      configuration.
+      Depending on whether you want to apply changes in kernel boot parameters
+      to the upcoming boot process, or all subsequent boot processes, the
+      requirements are as follows:
     </para>
-  </tip>
+    <itemizedlist>
+      <listitem>
+        <para>
+          To change kernel boot parameters on an experimental basis only for
+          the upcoming boot process, there are no requirements.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To change kernel boot parameters for all subsequent boot processes,
+          you should have <literal>root</literal> or equivalent administrative
+          privileges.
+        </para>
+      </listitem>
+    </itemizedlist>
   </section>
   <section xml:id="kernel-boot-parameters-modification-reasons">
     <title>Reasons for kernel boot parameter modification</title>
@@ -219,6 +211,16 @@
       As an example, we disable the splash screen that you can see during the
       boot.
     </para>
+    <tip>
+      <para>
+        Before modifying the kernel boot parameters, ensure that you create a
+        copy of the existing stable configuration somewhere outside of your
+        system. If the boat loader gets corrupted and your system fails to
+        boot, or you face problems after booting your system, the back up helps
+        you compare and restore the parameters to the last known working
+        configuration.
+      </para>
+    </tip>
   </section>
   <section xml:id="kernel-boot-parameters-modify-temporarily">
     <title>Temporarily modifying kernel boot parameters</title>
